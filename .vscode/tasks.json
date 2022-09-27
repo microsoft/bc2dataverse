@@ -1,0 +1,73 @@
+// See https://go.microsoft.com/fwlink/?LinkId=733558
+// for the documentation about the tasks.json format
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "watch",
+			"problemMatcher": "$tsc-watch",
+			"isBackground": true,
+			"presentation": {
+				"reveal": "never"
+			},
+			"group": "build",
+			"label": "npm: watch",
+			"detail": "tsc -watch -p ./"
+		},
+		{
+			"type": "typescript",
+			"tsconfig": "tsconfig.json",
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"label": "tsc: build - tsconfig.json"
+		},
+		{
+			"label": "Install packages",
+			"type": "shell",
+			"command": "npm install --package-lock",
+			"group": "build"
+		},
+		{
+			"label": "Copy res",
+			"type": "shell",
+			"command": "copy ./src/res/* ./out/",
+			"group": "build",
+		},
+		{
+			"label": "Copy package-lock.json",
+			"type": "shell",
+			"command": "copy ./node_modules/.package-lock.json ./package-lock.json",
+			"group": "build",
+		},
+		{
+			"label": "Publish AppPackageExtracter exe",
+			"type": "shell",
+			"command": "dotnet",
+            "args": [
+                "publish",
+                "${workspaceFolder}/src/AppPackageExtracter/AppPackageExtracter.csproj",
+                "/property:GenerateFullPaths=true,UseAppHost=true",
+                "/consoleloggerparameters:NoSummary",
+                "--output",
+                "${workspaceFolder}/bin",
+                "--framework",
+                "net48"
+            ],
+			"group": "build",
+		},
+		{
+			"label": "Package vsix",
+			"type": "shell",
+			"command": "vsce package",
+			"group": "build",
+			"dependsOrder": "sequence",
+			"dependsOn":["Install packages", "Publish AppPackageExtracter exe", "tsc: build - tsconfig.json", "Copy res"]
+		}
+	]
+}

@@ -1,25 +1,13 @@
-# TODO: The maintainer of this repo has not yet edited this file
-
-**REPO OWNER**: Do you want Customer Service & Support (CSS) support for this product/project?
-
-- **No CSS support:** Fill out this template with information about how to file issues and get help.
-- **Yes CSS support:** Fill out an intake form at [aka.ms/onboardsupport](https://aka.ms/onboardsupport). CSS will work with/help you to determine next steps.
-- **Not sure?** Fill out an intake as though the answer were "Yes". CSS will help you decide.
-
-*Then remove this first heading from this SUPPORT.MD file before publishing your repo.*
-
 # Support
 
-## How to file issues and get help  
+Please be aware that this tool is an experiment and aims to assist AL developers to easily make data integration between Dynamics 365 Business Central and Dataverse. The tool is not supported by the Dynamics 365 Business Central product group in Microsoft and was created with the sole intention of inspiring the community. Because of the paucity of resources, our support on this tool is very limited. Please expect delays in responding to your queries or bugs.
 
-This project uses GitHub Issues to track bugs and feature requests. Please search the existing 
-issues before filing new issues to avoid duplicates.  For new issues, file your bug or 
-feature request as a new Issue.
+## How to file issues and get help
 
-For help and questions about using this project, please **REPO MAINTAINER: INSERT INSTRUCTIONS HERE 
-FOR HOW TO ENGAGE REPO OWNERS OR COMMUNITY FOR HELP. COULD BE A STACK OVERFLOW TAG OR OTHER
-CHANNEL. WHERE WILL YOU HELP PEOPLE?**.
+This project uses GitHub Issues to track bugs and feature requests. Please search the existing issues before filing new issues to avoid duplicates.  For new issues, file your bug or feature request as a new Issue. As this is a Github project, a self-service approach is encouraged. Feel free to create pull requests with your changes.
 
-## Microsoft Support Policy  
+For help and other relevant questions about using this project, please feel free to write to bc2dataverse@microsoft.com.
 
-Support for this **PROJECT or PRODUCT** is limited to the resources listed above.
+## Microsoft Support Policy
+
+Support for this project is limited to the resources listed above.

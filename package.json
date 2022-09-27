@@ -1,0 +1,100 @@
+{
+	"name": "bc2dataverse",
+	"displayName": "Business Central integration with Dataverse",
+	"description": "Scaffolds AL code required to integrate between a Dataverse table into Dynamics 365 Business Central",
+	"version": "1.0.0",
+	"publisher": "The bc2dataverse team, Microsoft Denmark",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Microsoft/bc2dataverse"
+	},
+	"keywords": [
+		"Dynamics 365 Business Central",
+		"AL",
+		"Dataverse",
+		"CRM",
+		"CDS",
+		"Common Data Service",
+		"Integration",
+		"Mapping",
+		"Code",
+		"Generation"
+	],
+	"bugs": {
+		"url": "https://github.com/Microsoft/bc2dataverse/issues"
+	},
+	"license": "SEE LICENSE IN LICENSE.txt",
+	"engines": {
+		"vscode": "^1.68.0"
+	},
+	"categories": [
+		"Other",
+		"Formatters"
+	],
+	"activationEvents": [
+		"onCommand:bc2dataverse.generateProxy",
+		"onCommand:bc2dataverse.generateListPage",
+		"onCommand:bc2dataverse.mapToTable"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"configuration": {
+			"title": "Business Central integration with Dataverse configuration",
+			"properties": {
+				"bc2dataverse.packagesPath": {
+					"type": "string",
+					"description": "Sets the directory path where reference symbol packages are located.",
+					"scope": "resource"
+				},
+				"bc2dataverse.dataverseServiceUrl": {
+					"type": "string",
+					"description": "Url for the dataverse environment.",
+					"scope": "resource"
+				},
+				"bc2dataverse.symbolRefJsonRelativePath": {
+					"type": "string",
+					"description": "The relative folder from the default temp directory where SymbolReferences.json files extracted from the app packages shall be cached.",
+					"default": "./",
+					"scope": "resource"
+				}
+			}
+		},
+		"commands": [
+			{
+				"title": "Generate Proxy Table",
+				"command": "bc2dataverse.generateProxy",
+				"category": "bc2dataverse"
+			},
+			{
+				"title": "Generate List Page",
+				"command": "bc2dataverse.generateListPage",
+				"category": "bc2dataverse"
+			},
+			{
+				"title": "Map To Existing Table",
+				"command": "bc2dataverse.mapToTable",
+				"category": "bc2dataverse"
+			}
+		]
+	},
+	"scripts": {
+		"clean": "rimraf \"bin\" && rimraf \"out\" && rimraf \"*.vsix\" && rimraf \"package-lock.json\" && rimraf \"node_modules\"",
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile && npm run lint",
+		"test": "node ./out/test/runTest.js",
+		"vscode:uninstall": "node ./out/uninstall"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.2.0",
+		"@types/mocha": "^9.1.1",
+		"@types/node": "^16.0.0",
+		"@types/vscode": "^1.68.0",
+		"@vscode/test-electron": "^2.1.5",
+		"typescript": "^4.7.4"
+	},
+	"extensionDependencies": [
+		"ms-dynamics-smb.al"
+	]
+}

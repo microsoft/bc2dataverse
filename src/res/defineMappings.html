@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script type="text/javascript">
+        function generateCode() {
+            const mappings = collectDefinedMappings();
+            if (mappings.valid) {
+                const vscode = acquireVsCodeApi();
+                vscode.postMessage(
+                    {
+                        command: '${consts.htmlGenMappingsFuncName}',
+                        mappings: mappings.result
+                    });
+            }
+        }
+
+        function collectDefinedMappings() {
+            let result = [];
+            let validationErrors = false;
+            for (const row of document.getElementsByTagName("tr")) {
+                const mapping = getMappings(row);
+                if (mapping !== undefined) {
+                    switch (mapping.syncDirection) {
+                        case "${SyncInteractionType.noSync}":
+                            break;
+                        case "${SyncInteractionType.biDirectional}":
+                        case "${SyncInteractionType.toBC}":
+                        case "${SyncInteractionType.toDataverse}":
+                            if (mapping.syncFrom.value === "") {
+                                validationErrors = true;
+                                outlineRow(true, mapping.bcField);
+                            }
+                            else {
+                                outlineRow(false, mapping.bcField);
+                                result.push(mapping);
+                            }
+                            break;
+                        case "${SyncInteractionType.constant}":
+                            if (mapping.syncFrom.value === "") {
+                                validationErrors = true;
+                                outlineRow(true, mapping.bcField);
+                            }
+                            else {
+                                outlineRow(false, mapping.bcField);
+                                result.push(mapping);
+                            }
+                            break;
+                    }
+                }
+            }
+            if (validationErrors) {
+                show(document.getElementById("ErrorMsg"));
+            }
+            else {
+                hide(document.getElementById("ErrorMsg"));
+            }
+            return { valid: !validationErrors, result };
+        }
+
+        function getMappings(row) {
+            const bcField_ = row.id.replace("-row", "");
+            if (!bcField_) {
+                return;
+            }
+
+            const syncInteractionType_ = document.getElementById(bcField_ + "${consts.htmlSyncTypeSuffix}").value;
+            if (syncInteractionType_ === "${SyncInteractionType.noSync}") {
+                return;
+            }
+
+            const proxy_ = document.getElementById(bcField_ + "${consts.htmlSelectFieldSuffix}").value;
+            const const_ = document.getElementById(bcField_ + "${consts.htmlConstantValSuffix}").value;
+
+            return {
+                bcField: bcField_,
+                syncDirection: syncInteractionType_,
+                syncFrom: syncInteractionType_ === "${SyncInteractionType.constant}" ?
+                    {
+                        source: 'constant',
+                        value: const_
+                    } : {
+                        source: 'proxyField',
+                        value: proxy_
+                    }
+            }
+        }
+
+        function onSyncInteractionTypeChanged(interactionTypeSelect) {
+            const fieldNamePrefix = interactionTypeSelect.id.replace("${consts.htmlSyncTypeSuffix}", "");
+            const proxyFieldSelection = document.getElementById(fieldNamePrefix + "${consts.htmlSelectFieldSuffix}");
+            const contantValueText = document.getElementById(fieldNamePrefix + "${consts.htmlConstantValSuffix}");
+            switch (interactionTypeSelect.value) {
+                case '${SyncInteractionType.noSync}':
+                    hide(proxyFieldSelection);
+                    hide(contantValueText);
+                    break;
+                case '${SyncInteractionType.biDirectional}':
+                case '${SyncInteractionType.toBC}':
+                case '${SyncInteractionType.toDataverse}':
+                    show(proxyFieldSelection);
+                    hide(contantValueText);
+                    break;
+                case '${SyncInteractionType.constant}':
+                    hide(proxyFieldSelection);
+                    show(contantValueText);
+                    break;
+            }
+        }
+
+        function outlineRow(error, bcFieldName) {
+            const fieldNameElem = document.getElementById(bcFieldName + "${consts.htmlFieldNameSuffix}");
+            if (error) {
+                fieldNameElem.style.border = 'thin solid red';
+            }
+            else {
+                fieldNameElem.style.border = 'initial';
+            }
+        }
+
+        function configureInitialVisibility() {
+            const elems = document.body.getElementsByTagName("*");
+            for (const elem of elems) {
+                if (elem.id === "ErrorMsg" ||
+                    elem.id.endsWith("${consts.htmlSelectFieldSuffix}") ||
+                    elem.id.endsWith("${consts.htmlConstantValSuffix}")) {
+                    hide(elem);
+                }
+            }
+        }
+
+        function show(e) {
+            e.style.display = 'initial';
+        }
+
+        function hide(e) {
+            e.style.display = 'none';
+        }
+    </script>
+    <style type="text/css">
+        /**
+            table {border-collapse: collapse; width: 500px}
+            td { padding: 16px; text-align: center}
+        */
+    </style>
+</head>
+
+<body onload="configureInitialVisibility()">
+    <h1>Map the ${this.bcTable} table to the Dataverse proxy ${this.proxyTable} table</h1>
+    <p>Choose the mapping from the drop downs listed below.
+        Then click on the button below to generate the AL extension code that
+        will enable the mapping you specified. </p>
+    <p>
+        <button onclick="generateCode()">Generate AL code</button>
+    <div id="ErrorMsg" style="font-size: small; color: red;" >One or more mappings have invalid inputs. Please correct the marked rows and try again.</div>
+    </p>
+
+    <div>
+        <table>
+            <tr>
+                <th>${this.bcTable} field</th>
+                <th>Sync interaction type</th>
+                <th>Data source</th>
+            </tr>
+            ${this.getMappedRows()}
+        </table>
+    </div>
+
+    <datalist id="${consts.htmlProxyFieldDataListId}">
+        ${this.getProxyFieldListAsOptions()}
+    </datalist>
+</body>
+
+</html>
