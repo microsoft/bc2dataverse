@@ -3,10 +3,10 @@
 	"displayName": "Business Central integration with Dataverse",
 	"description": "Scaffolds AL code required to integrate between a Dataverse table into Dynamics 365 Business Central",
 	"version": "1.0.0",
-	"publisher": "The bc2dataverse team, Microsoft Denmark",
+	"publisher": "TheBc2dataverseteam-MSDenmark",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/Microsoft/bc2dataverse"
+		"url": "https://github.com/microsoft/bc2dataverse/"
 	},
 	"keywords": [
 		"Dynamics 365 Business Central",
@@ -78,7 +78,7 @@
 		]
 	},
 	"scripts": {
-		"clean": "rimraf \"bin\" && rimraf \"out\" && rimraf \"*.vsix\" && rimraf \"package-lock.json\" && rimraf \"node_modules\"",
+		"clean": "rimraf \"src\\AppPackageExtracter\\bin\" && rimraf \"src\\AppPackageExtracter\\obj\" && rimraf \"bin\" && rimraf \"out\" && rimraf \"*.vsix\" && rimraf \"package-lock.json\" && rimraf \"node_modules\"",
 		"vscode:prepublish": "npm run compile",
 		"compile": "tsc -p ./",
 		"watch": "tsc -watch -p ./",

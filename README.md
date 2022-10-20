@@ -23,10 +23,7 @@ Please be mindful of these before you run this tool,
 - Always make sure that you have compiled your AL project before invoking any of the VS Code commands.
 
 ### Installation
-Please follow the following steps to install this VS Code extension,
-1. Download the file [bc2dataverse-1.0.0.vsix](/bc2dataverse-1.0.0.vsix).
-2. In the AL workspace which you are in, follow the instructions at [Install from a VSIX](https://code.visualstudio.com/docs/editor/extension-marketplace#_install-from-a-vsix), and select the file you downloaded in the previous step.
-3. In the Command Palette, start typing `bc2dataverse` to see the available commands. Select any command to invoke it.
+The most updated version of the installable can be found at the [https://marketplace.visualstudio.com/items?itemName=TheBc2dataverseteam-MSDenmark.bc2dataverse](https://marketplace.visualstudio.com/items?itemName=TheBc2dataverseteam-MSDenmark.bc2dataverse). Install this extension into your Visual Studio Code environment by following the steps at [Browse for extensions](https://code.visualstudio.com/docs/editor/extension-marketplace#_browse-for-extensions).
 
 ## Contributing
 
