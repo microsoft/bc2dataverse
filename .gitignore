@@ -6,3 +6,5 @@ test
 vsc-extension-quickstart.md
 src/AppPackageExtracter/bin
 src/AppPackageExtracter/obj
+package-lock.json
+*.vsix
